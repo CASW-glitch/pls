@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>My Orders</h2>
+
+    {% if orders %}
+        <ul class="list-group">
+            {% for order in orders %}
+                <li class="list-group-item">
+                    <strong>Order #{{ order.id }}</strong> - {{ order.created_at|date:"Y-m-d H:i" }} <br>
+                    <ul>
+                        {% for item in order.items.all %}
+                            <li>{{ item.product.name }} ({{ item.size }}) (x{{ item.quantity }})</li>
+                        {% endfor %}
+                    </ul>
+                    <small>Status: {% if order.is_paid %}Paid{% else %}Missing payment{% endif %}</small>
+                    <small>, Delivery status: {{ order.get_status_display }}</small>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You have no orders yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

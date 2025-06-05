@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5" style="max-width: 900px;">
+    <h2 class="text-center mb-4" style="font-size: 32px;">Products in {{ category.name }}</h2>
+
+    <ul class="d-flex flex-wrap justify-content-center gap-4 p-0" style="list-style: none;">
+        {% for product in products %}
+            <li style="background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(23, 189, 240, 0.767); width: 200px; text-align: center; padding: 15px;">
+                <a href="{% url 'product_detail' product.id %}" style="text-decoration: none; color: inherit;">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" style="height: 150px; object-fit: cover; border-radius: 5px;">
+                    <h4 class="mt-2" style="font-size: 18px;">{{ product.name }}</h4>
+                    <p style="font-size: 16px; font-weight: 600; color: #2c3e50;">${{ product.price }}</p>
+                </a>
+            </li>
+        {% empty %}
+            <li>No products found in this category.</li>
+        {% endfor %}
+    </ul>
+
+    <div class="text-center mt-4">
+        <a href="{% url 'home' %}" style="padding: 12px 25px; background-color: #3498db; color: white; border-radius: 5px; text-decoration: none;">Back to Home</a>
+    </div>
+</div>
+{% endblock %}

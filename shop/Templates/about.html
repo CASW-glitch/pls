@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}About Us - CWExclusives{% endblock %}
+{% block content %}
+<div style="max-width: 800px; margin: 0 auto; padding: 1px 20px; text-align: center;">
+
+    <h1 style="font-size: 35px; font-weight: bold; margin-bottom: 5px;">About CWExclusives</h1>
+    
+    <p style="font-size: 20px; margin-bottom: 40px;">
+        Welcome to <strong>CWExclusives</strong> — your destination for carefully curated fashion, exclusive collections, 
+        and timeless accessories for both men and women. Our mission is simple: to bring you high-quality products 
+        that combine elegance and modern style.
+    </p>
+
+    <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 40px; margin-bottom: 5px;">
+
+        <div style="flex: 1; max-width: 250px;">
+            <img src="{% static 'shop/images/about_men.jpg' %}" alt="Mens Fashion" style="width: 100%; border-radius: 10px;">
+            <h3 style="margin-top: 15px;">Mens Collection</h3>
+            <p>Sharp, sophisticated, and always on trend.</p>
+        </div>
+
+        <div style="flex: 1; max-width: 250px;">
+            <img src="{% static 'shop/images/about_women.jpg' %}" alt="Womens Fashion" style="width: 100%; border-radius: 10px;">
+            <h3 style="margin-top: 15px;">Womens Collection</h3>
+            <p>Elegant styles to make every day a statement.</p>
+        </div>
+
+        <div style="flex: 1; max-width: 250px;">
+            <img src="{% static 'shop/images/about_accessories.jpg' %}" alt="Accessories" style="width: 100%; border-radius: 10px;">
+            <h3 style="margin-top: 15px;">Accessories</h3>
+            <p>Complete your look with the perfect finishing touch.</p>
+        </div>
+
+    </div>
+
+    <p style="font-size: 18px;">
+        Thank you for visiting us! If you have any questions or feedback, feel free to <a href="{% url 'contact' %}">contact us</a>.
+    </p>
+
+</div>
+{% endblock %}

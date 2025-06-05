@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h5 class="mb-3">Checkout</h5>
+  <hr style="margin: 0 0 1rem 0;">
+
+  <form method="post" action="{% url 'process_order' %}">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-md-6">
+        <h6 class="mb-2">Shipping Info</h6>
+
+        <div class="mb-2">
+          <label for="full_name" class="form-label">Name</label>
+          <input type="text" class="form-control form-control-sm" id="full_name" name="full_name" required>
+        </div>
+
+        <div class="mb-2">
+          <label for="address" class="form-label">Address</label>
+          <input type="text" class="form-control form-control-sm" id="address" name="address" required>
+        </div>
+
+        <div class="mb-2">
+          <label for="city" class="form-label">City</label>
+          <input type="text" class="form-control form-control-sm" id="city" name="city" required>
+        </div>
+
+        <div class="mb-2">
+          <label for="postal_code" class="form-label">Postal Code</label>
+          <input type="text" class="form-control form-control-sm" id="postal_code" name="postal_code" required>
+        </div>
+
+        <div class="mb-2">
+          <label for="country" class="form-label">Country</label>
+          <input type="text" class="form-control form-control-sm" id="country" name="country" required>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <h6 class="mb-2">Order Summary</h6>
+        <ul class="list-group list-group-sm mb-2">
+          {% for item in cart_items %}
+            <li class="list-group-item py-1 px-2 d-flex justify-content-between">
+              <small>{{ item.product.name }} ({{ item.size }}) x{{ item.quantity }} </small>
+              <small>${{ item.get_total_price }}</small>
+            </li>
+          {% endfor %}
+          <li class="list-group-item py-1 px-2 d-flex justify-content-between">
+            <strong>Total:</strong>
+            <strong>${{ cart_total }}</strong>
+          </li>
+        </ul>
+
+        <button type="submit" class="btn btn-success w-100">Place Order</button>
+        <a href="{% url 'home' %}" class="btn btn-outline-secondary btn-sm mt-3">← Go Back</a>
+      </div>
+    </div>
+  </form>
+
+  <h5>Modify cart here</h5>
+  <ul class="list-group mb-3">
+    {% for item in cart_items %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ item.product.name }} ({{ item.size }}) x{{ item.quantity }} - ${{ item.get_total_price }}
+
+        <div>
+          <form method="post" style="display: inline;">
+            {% csrf_token %}
+            <input type="hidden" name="decrease_item_id" value="{{ item.id }}">
+            <button type="submit" class="btn btn-sm btn-secondary">-</button>
+          </form>
+
+          <form method="post" style="display: inline;">
+            {% csrf_token %}
+            <input type="hidden" name="increase_item_id" value="{{ item.id }}">
+            <button type="submit" class="btn btn-sm btn-secondary">+</button>
+          </form>
+
+          <form method="post" style="display: inline;">
+            {% csrf_token %}
+            <input type="hidden" name="remove_item_id" value="{{ item.id }}">
+            <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
+          </form>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+
+</div>
+{% endblock %}
